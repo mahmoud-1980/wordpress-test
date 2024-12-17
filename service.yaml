@@ -1,0 +1,45 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: wordpress
+  namespace: wordpress-test
+  uid: 0b25c9d2-c9d6-483d-b301-bafacbe9f3f4
+  resourceVersion: '9134319'
+  creationTimestamp: '2024-12-17T15:13:12Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-12-17T15:13:12Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":80,"protocol":"TCP"}':
+              .: {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+spec:
+  clusterIP: 172.30.71.155
+  ipFamilies:
+    - IPv4
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.71.155
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: MyApp
+status:
+  loadBalancer: {}
