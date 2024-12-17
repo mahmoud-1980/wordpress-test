@@ -1,0 +1,247 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: wordpress1
+  namespace: wordpress-test
+  uid: d475aa75-8203-4d0f-9be3-f44e0beb359b
+  resourceVersion: '9136039'
+  creationTimestamp: '2024-12-17T15:14:51Z'
+  labels:
+    app: httpd
+  annotations:
+    k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.128.0.116/23"],"mac_address":"0a:58:0a:80:00:74","gateway_ips":["10.128.0.1"],"routes":[{"dest":"10.128.0.0/14","nextHop":"10.128.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.128.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.128.0.1"}],"ip_address":"10.128.0.116/23","gateway_ip":"10.128.0.1","role":"primary"}}'
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "ovn-kubernetes",
+          "interface": "eth0",
+          "ips": [
+              "10.128.0.116"
+          ],
+          "mac": "0a:58:0a:80:00:74",
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/scc: restricted-v2
+    seccomp.security.alpha.kubernetes.io/pod: runtime/default
+  managedFields:
+    - manager: ba-be-ba-be-04-04
+      operation: Update
+      apiVersion: v1
+      time: '2024-12-17T15:14:51Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.ovn.org/pod-networks': {}
+      subresource: status
+    - manager: multus-daemon
+      operation: Update
+      apiVersion: v1
+      time: '2024-12-17T15:14:52Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.v1.cni.cncf.io/network-status': {}
+      subresource: status
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-12-17T15:22:57Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:containers':
+            'k:{"name":"httpd"}':
+              'f:image': {}
+              'f:terminationMessagePolicy': {}
+              .: {}
+              'f:resources': {}
+              'f:securityContext':
+                .: {}
+                'f:allowPrivilegeEscalation': {}
+                'f:capabilities':
+                  .: {}
+                  'f:drop': {}
+              'f:terminationMessagePath': {}
+              'f:imagePullPolicy': {}
+              'f:ports':
+                .: {}
+                'k:{"containerPort":8080,"protocol":"TCP"}':
+                  .: {}
+                  'f:containerPort': {}
+                  'f:protocol': {}
+              'f:name': {}
+          'f:dnsPolicy': {}
+          'f:enableServiceLinks': {}
+          'f:restartPolicy': {}
+          'f:schedulerName': {}
+          'f:securityContext':
+            .: {}
+            'f:runAsNonRoot': {}
+            'f:seccompProfile':
+              .: {}
+              'f:type': {}
+          'f:terminationGracePeriodSeconds': {}
+    - manager: kubelet
+      operation: Update
+      apiVersion: v1
+      time: '2024-12-17T15:23:00Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:conditions':
+            'k:{"type":"ContainersReady"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Initialized"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"PodReadyToStartContainers"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Ready"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+          'f:containerStatuses': {}
+          'f:hostIP': {}
+          'f:hostIPs': {}
+          'f:phase': {}
+          'f:podIP': {}
+          'f:podIPs':
+            .: {}
+            'k:{"ip":"10.128.0.116"}':
+              .: {}
+              'f:ip': {}
+          'f:startTime': {}
+      subresource: status
+spec:
+  restartPolicy: Always
+  serviceAccountName: default
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  preemptionPolicy: PreemptLowerPriority
+  nodeName: ba-be-ba-be-04-04
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c29,c24'
+    runAsNonRoot: true
+    fsGroup: 1000860000
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - resources: {}
+      terminationMessagePath: /dev/termination-log
+      name: httpd
+      securityContext:
+        capabilities:
+          drop:
+            - ALL
+        runAsUser: 1000860000
+        allowPrivilegeEscalation: false
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: kube-api-access-vtt44
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: 'quay.io/jonasbjork/lernialab:latest'
+  serviceAccount: default
+  volumes:
+    - name: kube-api-access-vtt44
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  containerStatuses:
+    - restartCount: 0
+      started: true
+      ready: true
+      name: httpd
+      state:
+        running:
+          startedAt: '2024-12-17T15:22:59Z'
+      imageID: 'quay.io/jonasbjork/lernialab@sha256:761c136dac09ad340e2e62e3f1cf3fd225d1f83a47969c4c560eec726c3f048b'
+      image: 'quay.io/jonasbjork/lernialab:latest'
+      lastState: {}
+      containerID: 'cri-o://6838ce94422ef1a4756a0f0b452c3aca122d52d48ca1c195c413df792149a3fa'
+  qosClass: BestEffort
+  hostIPs:
+    - ip: 192.168.7.234
+  podIPs:
+    - ip: 10.128.0.116
+  podIP: 10.128.0.116
+  hostIP: 192.168.7.234
+  startTime: '2024-12-17T15:14:51Z'
+  conditions:
+    - type: PodReadyToStartContainers
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-12-17T15:14:53Z'
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-12-17T15:14:51Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-12-17T15:23:00Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-12-17T15:23:00Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-12-17T15:14:51Z'
+  phase: Running
